@@ -1,0 +1,62 @@
+Input_Pax_Real <- "C:/Users/cdavalos/Documents/Pronostico TM/R/Output Outlier/Prueba/PAX_Real.csv"
+Input_Rev_USD_Real <- "C:/Users/cdavalos/Documents/Pronostico TM/R/Output Outlier/Prueba/REV_USD_Real.csv"
+Input_Rev_COP_Real <- "C:/Users/cdavalos/Documents/Pronostico TM/R/Output Outlier/Prueba/REV_COP_Real.csv"
+
+Input_Pax_Outliers <- "C:/Users/cdavalos/Documents/Pronostico TM/R/Output Outlier/Prueba/PAX_Outliers.csv"
+Input_Rev_USD_Outliers <- "C:/Users/cdavalos/Documents/Pronostico TM/R/Output Outlier/Prueba/REV_USD_Outliers.csv"
+Input_Rev_COP_Outliers <- "C:/Users/cdavalos/Documents/Pronostico TM/R/Output Outlier/Prueba/REV_COP_Outliers.csv"
+
+Input_MINMAX <- "C:/Users/cdavalos/Documents/Pronostico TM/R/Input/Min Max Fechas.txt"
+
+Pax_Real <- read.table(Input_Pax_Real, sep=" ", header=TRUE, fileEncoding="latin1") 
+Rev_USD_Real <- read.table(Input_Rev_USD_Real, sep=" ", header=TRUE, fileEncoding="latin1") 
+Rev_COP_Real <- read.table(Input_Rev_COP_Real, sep=" ", header=TRUE, fileEncoding="latin1") 
+
+Pax_Outliers <- read.table(Input_Pax_Outliers, sep=" ", header=TRUE, fileEncoding="latin1") 
+Rev_USD_Outliers <- read.table(Input_Rev_USD_Outliers, sep=" ", header=TRUE, fileEncoding="latin1")
+Rev_COP_Outliers <- read.table(Input_Rev_COP_Outliers, sep=" ", header=TRUE, fileEncoding="latin1")
+
+legsPaxReal <- ncol(Pax_Real)
+cantDatosPaxReal <- nrow(Pax_Real)
+
+legsUSDReal <- ncol(Rev_USD_Real)
+cantDatosUSDReal <- nrow(Rev_USD_Real)
+
+legsCOPReal <- ncol(Rev_COP_Real)
+cantDatosCOPReal <- nrow(Rev_COP_Real)
+
+legsPaxOutliers <- ncol(Pax_Outliers)
+cantDatosPaxOutliers <- nrow(Pax_Outliers)
+
+legsUSDOutliers <- ncol(Rev_USD_Outliers)
+cantDatosUSDOutliers <- nrow(Rev_USD_Outliers)
+
+legsCOPOutliers <- ncol(Rev_COP_Outliers)
+cantDatosOutliers <- nrow(Rev_COP_Outliers)
+
+for(i in 1:legsPaxOutliers){
+	if(any(Pax_Outliers[i]<0)){
+		pos <- which(Pax_Outliers[i]<0)
+		Pax_Outliers[pos,i] <- 1
+			}
+}
+
+for(i in 1:legsUSDOutliers){
+	if(any(Rev_USD_Outliers[i]<0)){
+		pos <- which(Rev_USD_Outliers[i]<0)
+		Rev_USD_Outliers[pos,i] <- 1
+			}
+}
+
+for(i in 1:legsCOPOutliers){
+	if(any(Rev_COP_Outliers[i]<0)){
+		pos <- which(Rev_COP_Outliers[i]<0)
+		Rev_COP_Outliers[pos,i] <- 1
+			}
+}
+
+setwd("C:/Users/cdavalos/Documents/Pronostico TM/R/Output Outlier/Prueba")
+
+write.table(file="PAX_Outliers.csv",Pax_Outliers)
+write.table(file="REV_USD_Outliers.csv",Rev_USD_Outliers)
+write.table(file="REV_COP_Outliers.csv",Rev_COP_Outliers)
